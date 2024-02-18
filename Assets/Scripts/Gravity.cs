@@ -31,7 +31,6 @@ public class Gravity : MonoBehaviour
             gravityForce += distance * velocity;
         }
 
-        Debug.Log(gravityForce);
         rb.AddForce(gravityForce);
     }
 }
