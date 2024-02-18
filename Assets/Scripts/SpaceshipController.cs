@@ -8,33 +8,41 @@ public class SpaceshipController : MonoBehaviour
     private Rigidbody2D rb;
     private CompositeCollider2D collider;
     private ParticleSystem engineEmitter;
+    private Animator animator;
 
     [SerializeField] float speed = 2.0f;
     [SerializeField] float rotSpeed = 4.0f;
     private float throttle = 0.0f;
     private float rotation = 0.0f;
+    private bool updateShip = true;
 
     private void Awake()
     {
+        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         collider = GetComponent<CompositeCollider2D>();
         engineEmitter = transform.Find("EngineParticles").GetComponent<ParticleSystem>();
         engineEmitter.Stop();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collider == null || collision == null) { return; }
 
         switch (collision.gameObject.tag)
         {
-            case("Planet"):
-                Debug.Log("destroy");
+            case ("Planet"):
+                Death();
                 return;
             default:
-                Debug.Log("nothing");
                 return;
         }
+    }
+
+    private void Death()
+    {
+        animator.SetTrigger("Died");
+        updateShip = false;
     }
 
     private void Update()
@@ -43,13 +51,14 @@ public class SpaceshipController : MonoBehaviour
         rotation = -Input.GetAxis("Horizontal");
 
         if (!engineEmitter) { return; }
-        if (throttle > 0.0f && !engineEmitter.isEmitting) { engineEmitter.Play(); }
+        if (throttle > 0.0f && !engineEmitter.isEmitting && updateShip) { engineEmitter.Play(); }
         else if(throttle <= 0.0f) { engineEmitter.Stop(); }
     }
 
     private void FixedUpdate()
     {
         if (!rb) { return; };
+        if (!updateShip) { rb.velocity = Vector3.zero; rb.totalTorque = 0; rb.freezeRotation = true; return; }
         rb.AddRelativeForce(new Vector2(0, throttle * speed));
         rb.AddTorque(rotation * rotSpeed);
     }

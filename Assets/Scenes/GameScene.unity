@@ -5367,6 +5367,7 @@ GameObject:
   - component: {fileID: 899055691}
   - component: {fileID: 899055695}
   - component: {fileID: 899055696}
+  - component: {fileID: 899055697}
   m_Layer: 0
   m_Name: Spaceship
   m_TagString: Player
@@ -5661,6 +5662,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   G: 2.5
+--- !u!95 &899055697
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 899055688}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: be84012248d51514392fffddb3e27513, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1902378342
 GameObject:
   m_ObjectHideFlags: 0
@@ -5673,7 +5695,7 @@ GameObject:
   - component: {fileID: 1902378343}
   - component: {fileID: 1902378345}
   m_Layer: 0
-  m_Name: 3043469385
+  m_Name: Planet
   m_TagString: Planet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
