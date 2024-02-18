@@ -82,15 +82,15 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _StarScale: 30
+    - _StarScale: 40
     - _Threshold: 0.99
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Offset: {r: 472.65, g: 0, b: 0, a: 0}
-    - _StarTint: {r: 0.9529412, g: 0.5613535, b: 0.49019608, a: 0}
+    - _Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _StarTint: {r: 1, g: 0.3724017, b: 0.25943398, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &6071962290856105596
 MonoBehaviour:
