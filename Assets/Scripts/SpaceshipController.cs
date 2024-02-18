@@ -6,7 +6,7 @@ using UnityEngine;
 public class SpaceshipController : MonoBehaviour
 {
     private Rigidbody2D rb;
-    private CompositeCollider2D collider;
+    private CompositeCollider2D compositeCollider;
     private ParticleSystem engineEmitter;
     private Animator animator;
 
@@ -20,14 +20,14 @@ public class SpaceshipController : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        collider = GetComponent<CompositeCollider2D>();
+        compositeCollider = GetComponent<CompositeCollider2D>();
         engineEmitter = transform.Find("EngineParticles").GetComponent<ParticleSystem>();
         engineEmitter.Stop();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collider == null || collision == null) { return; }
+        if (compositeCollider == null || collision == null) { return; }
 
         switch (collision.gameObject.tag)
         {
