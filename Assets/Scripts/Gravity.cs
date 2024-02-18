@@ -16,6 +16,7 @@ public class Gravity : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if (rb == null) { return; }
         Vector2 gravityForce = new Vector2();
 
         for (int i = 0; i < planets.Length; i++)
@@ -31,6 +32,7 @@ public class Gravity : MonoBehaviour
             gravityForce += distance * velocity;
         }
 
+        print(gravityForce);
         rb.AddForce(gravityForce);
     }
 }
