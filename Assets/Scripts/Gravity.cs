@@ -5,6 +5,7 @@ using UnityEngine;
 public class Gravity : MonoBehaviour
 {
     [SerializeField] float G = 1.0f;
+    [SerializeField] Vector2 initialVelocity = Vector2.zero;
 
     private Rigidbody2D rb;
     private GameObject[] planets;
@@ -13,6 +14,8 @@ public class Gravity : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         planets = GameObject.FindGameObjectsWithTag("Planet");
+
+        rb.AddForce(initialVelocity);
     }
     private void FixedUpdate()
     {
