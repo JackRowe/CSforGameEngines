@@ -65,7 +65,7 @@ Material:
     - _BUILTIN_QueueOffset: 0
     - _Brightness: 10
     - _BrightnessPower: 5
-    - _BrightnessVariation: 10
+    - _BrightnessVariation: 5
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
