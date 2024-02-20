@@ -43,7 +43,8 @@ public class InterfaceController : MonoBehaviour
         velocityTransform.rotation = new Quaternion(0,0,-velocityRotation.y,velocityRotation.w);
         velocityTransform.sizeDelta = new Vector2(3, Mathf.Clamp(rb.velocity.magnitude, 0, 40));
 
-        if (wreck == null) {
+        if (wreck == null) 
+        {
             Vector2 stationDistance = station.transform.position - player.transform.position;
             Quaternion stationRotation = Quaternion.LookRotation(stationDistance, -Vector3.forward); ;
             objectiveTransform.rotation = new Quaternion(0, 0, -stationRotation.y, stationRotation.w);

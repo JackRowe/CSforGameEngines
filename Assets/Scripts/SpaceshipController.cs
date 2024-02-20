@@ -9,6 +9,7 @@ public class SpaceshipController : MonoBehaviour
     private CompositeCollider2D compositeCollider;
     private ParticleSystem engineEmitter;
     private Animator animator;
+    private Spawner spawner;
 
     [SerializeField] float speed = 2.0f;
     [SerializeField] float rotSpeed = 4.0f;
@@ -19,6 +20,7 @@ public class SpaceshipController : MonoBehaviour
 
     private void Awake()
     {
+        spawner = GetComponent<Spawner>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         compositeCollider = GetComponent<CompositeCollider2D>();
@@ -36,6 +38,11 @@ public class SpaceshipController : MonoBehaviour
                 Death();
                 return;
             case ("Wreck"):
+                survivors += Random.Range(10,20);
+                Destroy(collision.gameObject);
+                return;
+            case ("Station"):
+                survivors = 0;
                 return;
             default:
                 return;
@@ -54,7 +61,6 @@ public class SpaceshipController : MonoBehaviour
     {
         throttle = Mathf.Clamp(Input.GetAxis("Vertical"), 0, 1);
         rotation = -Input.GetAxis("Horizontal");
-        survivors++;
 
         if (!engineEmitter) { return; }
         if (throttle > 0.0f && !engineEmitter.isEmitting && updateShip) { engineEmitter.Play(); }
@@ -67,5 +73,10 @@ public class SpaceshipController : MonoBehaviour
         if (!updateShip) { rb.velocity = Vector3.zero; rb.totalTorque = 0; rb.freezeRotation = true; return; }
         rb.AddRelativeForce(new Vector2(0, throttle * speed));
         rb.AddTorque(rotation * rotSpeed);
+
+        if (survivors <= 0 && !spawner.SpawnedWreck)
+        {
+            spawner.SpawnWreck();
+        }
     }
 }
