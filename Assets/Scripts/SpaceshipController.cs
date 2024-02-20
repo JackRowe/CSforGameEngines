@@ -15,6 +15,7 @@ public class SpaceshipController : MonoBehaviour
     private float throttle = 0.0f;
     private float rotation = 0.0f;
     private bool updateShip = true;
+    private int survivors = 0;
 
     private void Awake()
     {
@@ -34,6 +35,8 @@ public class SpaceshipController : MonoBehaviour
             case ("Planet"):
                 Death();
                 return;
+            case ("Wreck"):
+                return;
             default:
                 return;
         }
@@ -45,10 +48,13 @@ public class SpaceshipController : MonoBehaviour
         updateShip = false;
     }
 
+    public int GetSurvivors() { return survivors; }
+
     private void Update()
     {
         throttle = Mathf.Clamp(Input.GetAxis("Vertical"), 0, 1);
         rotation = -Input.GetAxis("Horizontal");
+        survivors++;
 
         if (!engineEmitter) { return; }
         if (throttle > 0.0f && !engineEmitter.isEmitting && updateShip) { engineEmitter.Play(); }
