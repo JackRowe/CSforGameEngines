@@ -17,6 +17,7 @@ public class InterfaceController : MonoBehaviour
     TextMeshProUGUI objectiveText;
     RectTransform velocityTransform;
     RectTransform objectiveTransform;
+    RectTransform fuelTransform;
 
     private void Awake()
     {
@@ -30,6 +31,7 @@ public class InterfaceController : MonoBehaviour
         velocityText = transform.Find("Compass/VelocityText").GetComponent<TextMeshProUGUI>();
         velocityTransform = transform.Find("Compass/Velocity").GetComponent<RectTransform>();
         objectiveTransform = transform.Find("Compass/Objective").GetComponent<RectTransform>();
+        fuelTransform = transform.Find("Fuel/Bar").GetComponent<RectTransform>();
     }
 
     private void Update()
@@ -37,6 +39,9 @@ public class InterfaceController : MonoBehaviour
         if (player == null || rb == null) { return; }
 
         wreck = GameObject.FindGameObjectWithTag("Wreck");
+
+        fuelTransform.sizeDelta = new Vector2((playerController.GetFuel() - 100.0f) / 2, 20);
+        Debug.Log(playerController.GetFuel());
 
         survivorText.SetText(playerController.GetSurvivors().ToString());
 

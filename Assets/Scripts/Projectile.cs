@@ -6,18 +6,32 @@ public class Projectile : MonoBehaviour
 {
     public GameObject Creator;
     private Rigidbody2D rb;
+    private BoxCollider2D boxCollider;
 
     [SerializeField] int speed = 0;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        boxCollider = GetComponent<BoxCollider2D>();
+        rb.AddRelativeForce(new Vector2(0, speed));
     }
 
-    private void Start()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        rb.AddRelativeForce(new Vector2(0, speed));
-        //transform.rotation = .up);
+        if (collision == null || collision.gameObject == Creator) { return; }
+
+
+        switch (collision.gameObject.tag)
+        {
+            case ("Asteroid"):
+                Destroy(collision.gameObject);
+                Destroy(gameObject);
+                return;
+            default:
+                Destroy(gameObject);
+                return;
+        }
     }
 
 }

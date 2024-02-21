@@ -23,7 +23,7 @@ public class SpaceshipController : MonoBehaviour
     private float t = 0.0f;
 
     private float lastShot = 0.0f;
-    private float lastShotCooldown = 0.1f;
+    private float lastShotCooldown = 0.2f;
 
     private void Awake()
     {
@@ -74,7 +74,7 @@ public class SpaceshipController : MonoBehaviour
 
         if (Input.GetMouseButton(0) && t - lastShot > lastShotCooldown) {
             lastShot = t;
-            GameObject projectile = Instantiate(projectilePrefab, transform.position, transform.rotation);
+            GameObject projectile = Instantiate(projectilePrefab, transform.position, transform.rotation, transform);
             Projectile script = projectile.GetComponent<Projectile>();
             Rigidbody2D rbProjectile = projectile.GetComponent<Rigidbody2D>();
             script.Creator = gameObject;
@@ -95,7 +95,7 @@ public class SpaceshipController : MonoBehaviour
 
         rb.AddRelativeForce(new Vector2(0, throttle * speed));
         rb.AddTorque(rotation * rotSpeed);
-        fuel -= throttle;
+        fuel -= throttle / 2;
 
         if (survivors <= 0 && !spawner.SpawnedWreck)
         {

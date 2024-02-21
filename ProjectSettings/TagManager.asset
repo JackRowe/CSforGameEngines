@@ -7,6 +7,7 @@ TagManager:
   - Planet
   - Wreck
   - Station
+  - Asteroid
   layers:
   - Default
   - TransparentFX
