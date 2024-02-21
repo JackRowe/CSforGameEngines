@@ -62,6 +62,8 @@ public class SpaceshipController : MonoBehaviour
         throttle = Mathf.Clamp(Input.GetAxis("Vertical"), 0, 1);
         rotation = -Input.GetAxis("Horizontal");
 
+        if (Input.GetKey(KeyCode.LeftShift)) { throttle *= 2; }
+
         if (!engineEmitter) { return; }
         if (throttle > 0.0f && !engineEmitter.isEmitting && updateShip) { engineEmitter.Play(); }
         else if(throttle <= 0.0f) { engineEmitter.Stop(); }
@@ -71,8 +73,6 @@ public class SpaceshipController : MonoBehaviour
     {
         if (!rb) { return; };
         if (!updateShip) { rb.velocity = Vector3.zero; rb.totalTorque = 0; rb.freezeRotation = true; return; }
-        if (Input.GetKeyDown(KeyCode.LeftShift)) { speed = 10.0f;}
-        else if (!Input.GetKeyDown(KeyCode.LeftShift)) { speed = 2.0f; }
         rb.AddRelativeForce(new Vector2(0, throttle * speed));
         rb.AddTorque(rotation * rotSpeed);
 
