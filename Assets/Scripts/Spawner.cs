@@ -10,6 +10,6 @@ public class Spawner : MonoBehaviour
 
     public void SpawnWreck()
     {
-        SpawnedWreck = Instantiate(wreckPrefab, new Vector3(Random.Range(-1000, 1000), Random.Range(-1000, 1000),0), Quaternion.identity);
+        SpawnedWreck = Instantiate(wreckPrefab, new Vector3(Random.Range(-250, 250), Random.Range(-250, 250),0), Quaternion.identity);
     }
 }
