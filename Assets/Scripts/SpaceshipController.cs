@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class SpaceshipController : MonoBehaviour
 {
+    [SerializeField] GameObject projectilePrefab;
     private Rigidbody2D rb;
     private CompositeCollider2D compositeCollider;
     private ParticleSystem engineEmitter;
@@ -15,8 +16,14 @@ public class SpaceshipController : MonoBehaviour
     [SerializeField] float rotSpeed = 4.0f;
     private float throttle = 0.0f;
     private float rotation = 0.0f;
+    private float fuel = 100.0f;
     private bool updateShip = true;
     private int survivors = 0;
+
+    private float t = 0.0f;
+
+    private float lastShot = 0.0f;
+    private float lastShotCooldown = 0.1f;
 
     private void Awake()
     {
@@ -55,7 +62,8 @@ public class SpaceshipController : MonoBehaviour
         updateShip = false;
     }
 
-    public int GetSurvivors() { return survivors; }
+    public int GetSurvivors() => survivors;
+    public float GetFuel() => fuel;
 
     private void Update()
     {
@@ -63,6 +71,17 @@ public class SpaceshipController : MonoBehaviour
         rotation = -Input.GetAxis("Horizontal");
 
         if (Input.GetKey(KeyCode.LeftShift)) { throttle *= 2; }
+
+        if (Input.GetMouseButton(0) && t - lastShot > lastShotCooldown) {
+            lastShot = t;
+            GameObject projectile = Instantiate(projectilePrefab, transform.position, transform.rotation);
+            Projectile script = projectile.GetComponent<Projectile>();
+            Rigidbody2D rbProjectile = projectile.GetComponent<Rigidbody2D>();
+            script.Creator = gameObject;
+            rbProjectile.velocity = rb.velocity;
+        }
+
+        t += Time.deltaTime;
 
         if (!engineEmitter) { return; }
         if (throttle > 0.0f && !engineEmitter.isEmitting && updateShip) { engineEmitter.Play(); }
@@ -73,8 +92,10 @@ public class SpaceshipController : MonoBehaviour
     {
         if (!rb) { return; };
         if (!updateShip) { rb.velocity = Vector3.zero; rb.totalTorque = 0; rb.freezeRotation = true; return; }
+
         rb.AddRelativeForce(new Vector2(0, throttle * speed));
         rb.AddTorque(rotation * rotSpeed);
+        fuel -= throttle;
 
         if (survivors <= 0 && !spawner.SpawnedWreck)
         {
