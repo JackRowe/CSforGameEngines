@@ -65,6 +65,8 @@ public class SpaceshipController : MonoBehaviour
     public int GetSurvivors() => survivors;
     public float GetFuel() => fuel;
 
+    public void RefillFuel() { fuel = 100.0f; }
+
     private void Update()
     {
         throttle = Mathf.Clamp(Input.GetAxis("Vertical"), 0, 1);
@@ -84,18 +86,19 @@ public class SpaceshipController : MonoBehaviour
         t += Time.deltaTime;
 
         if (!engineEmitter) { return; }
-        if (throttle > 0.0f && !engineEmitter.isEmitting && updateShip) { engineEmitter.Play(); }
-        else if(throttle <= 0.0f) { engineEmitter.Stop(); }
+        if (throttle > 0.0f && !engineEmitter.isEmitting && updateShip && fuel > 0.0f) { engineEmitter.Play(); }
+        else { engineEmitter.Stop(); }
     }
 
     private void FixedUpdate()
     {
         if (!rb) { return; };
         if (!updateShip) { rb.velocity = Vector3.zero; rb.totalTorque = 0; rb.freezeRotation = true; return; }
+        if (fuel <= 0.0f) { return; }
 
         rb.AddRelativeForce(new Vector2(0, throttle * speed));
         rb.AddTorque(rotation * rotSpeed);
-        fuel -= throttle / 2;
+        fuel -= throttle / 10;
 
         if (survivors <= 0 && !spawner.SpawnedWreck)
         {

@@ -27,6 +27,13 @@ public class Projectile : MonoBehaviour
             case ("Asteroid"):
                 Destroy(collision.gameObject);
                 Destroy(gameObject);
+
+                if(Creator.CompareTag("Player"))
+                {
+                    SpaceshipController controller = Creator.GetComponent<SpaceshipController>();
+                    controller.RefillFuel();
+                }
+
                 return;
             default:
                 Destroy(gameObject);
