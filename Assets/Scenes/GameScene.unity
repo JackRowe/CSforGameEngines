@@ -6338,6 +6338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wreckPrefab: {fileID: 6279621702727644075, guid: 5f6435e5a1426b94ab08600edca9c7e8, type: 3}
+  asteroidPrefab: {fileID: 8655103030695841529, guid: 52fbb6061d663664aaaaf6b40f758cd4, type: 3}
   SpawnedWreck: {fileID: 0}
 --- !u!1 &1116612794
 GameObject:
