@@ -84,6 +84,7 @@ public class SpaceshipController : MonoBehaviour
     }
 
     public int GetSurvivors() => survivors;
+    public int GetMoney() => money;
     public float GetFuel() => fuel;
 
     public void RefillFuel() { fuel = 100.0f; }
@@ -119,7 +120,7 @@ public class SpaceshipController : MonoBehaviour
 
         rb.AddRelativeForce(new Vector2(0, throttle * speed));
         rb.AddTorque(rotation * rotSpeed);
-        fuel -= throttle / 10;
+        fuel -= throttle / 30;
 
         if (survivors <= 0 && !spawner.SpawnedWreck)
         {

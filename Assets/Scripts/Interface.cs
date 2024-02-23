@@ -16,6 +16,7 @@ public class Interface : MonoBehaviour
 
     TextMeshProUGUI velocityText;
     TextMeshProUGUI survivorText;
+    TextMeshProUGUI moneyText;
     TextMeshProUGUI objectiveText;
     RectTransform velocityTransform;
     RectTransform objectiveTransform;
@@ -31,6 +32,7 @@ public class Interface : MonoBehaviour
         survivorText = transform.Find("Astronauts/Saved").GetComponent<TextMeshProUGUI>();
         objectiveText = transform.Find("Compass/ObjectiveText").GetComponent<TextMeshProUGUI>();
         velocityText = transform.Find("Compass/VelocityText").GetComponent<TextMeshProUGUI>();
+        moneyText = transform.Find("Money/Amount").GetComponent<TextMeshProUGUI>();
         velocityTransform = transform.Find("Compass/Velocity").GetComponent<RectTransform>();
         objectiveTransform = transform.Find("Compass/Objective").GetComponent<RectTransform>();
         fuelTransform = transform.Find("Fuel/Bar").GetComponent<RectTransform>();
@@ -56,6 +58,7 @@ public class Interface : MonoBehaviour
         Debug.Log(playerController.GetFuel());
 
         survivorText.SetText(playerController.GetSurvivors().ToString());
+        moneyText.SetText(playerController.GetMoney().ToString());
 
         velocityText.SetText($"{Mathf.Round(rb.velocity.magnitude)} u/s");
         Quaternion velocityRotation = Quaternion.LookRotation(rb.velocity, -Vector3.forward); ;
