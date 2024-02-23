@@ -11,6 +11,7 @@ public class SpaceshipController : MonoBehaviour
     private ParticleSystem engineEmitter;
     private Animator animator;
     private Spawner spawner;
+    private Interface ui;
 
     [SerializeField] float speed = 2.0f;
     [SerializeField] float rotSpeed = 4.0f;
@@ -19,6 +20,7 @@ public class SpaceshipController : MonoBehaviour
     private float fuel = 100.0f;
     private bool updateShip = true;
     private int survivors = 0;
+    private int money = 0;
 
     private float t = 0.0f;
 
@@ -31,6 +33,7 @@ public class SpaceshipController : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         compositeCollider = GetComponent<CompositeCollider2D>();
+        ui = GameObject.Find("Camera/Canvas").GetComponent<Interface>();
         engineEmitter = transform.Find("EngineParticles").GetComponent<ParticleSystem>();
         engineEmitter.Stop();
     }
@@ -41,7 +44,7 @@ public class SpaceshipController : MonoBehaviour
 
         switch (collision.gameObject.tag)
         {
-            case ("Planet"):
+            case ("Planet") or ("Asteroid"):
                 Death();
                 return;
             case ("Wreck"):
@@ -49,7 +52,25 @@ public class SpaceshipController : MonoBehaviour
                 Destroy(collision.gameObject);
                 return;
             case ("Station"):
+                money += survivors;
                 survivors = 0;
+                ui.OpenShop();
+                RefillFuel();
+                return;
+            default:
+                return;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (compositeCollider == null || collision == null) { return; }
+
+        switch (collision.gameObject.tag)
+        {
+            case ("Station"):
+                ui.CloseShop();
+                RefillFuel();
                 return;
             default:
                 return;

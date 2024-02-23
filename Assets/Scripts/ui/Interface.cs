@@ -4,8 +4,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InterfaceController : MonoBehaviour
+public class Interface : MonoBehaviour
 {
+    [SerializeField] GameObject uiShopPrefab;
+    GameObject uiShop;
     GameObject player;
     SpaceshipController playerController;
     GameObject wreck;
@@ -32,6 +34,16 @@ public class InterfaceController : MonoBehaviour
         velocityTransform = transform.Find("Compass/Velocity").GetComponent<RectTransform>();
         objectiveTransform = transform.Find("Compass/Objective").GetComponent<RectTransform>();
         fuelTransform = transform.Find("Fuel/Bar").GetComponent<RectTransform>();
+    }
+
+    public void OpenShop()
+    {
+        uiShop = Instantiate(uiShopPrefab, transform);
+    }
+
+    public void CloseShop()
+    {
+        Destroy(uiShop);
     }
 
     private void Update()
