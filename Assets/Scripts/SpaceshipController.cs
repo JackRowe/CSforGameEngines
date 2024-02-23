@@ -27,6 +27,9 @@ public class SpaceshipController : MonoBehaviour
     private float lastShot = 0.0f;
     private float lastShotCooldown = 0.2f;
 
+    private float lastAsteroid = 0.0f;
+    private float lastAsteroid
+
     private void Awake()
     {
         spawner = GetComponent<Spawner>();
@@ -115,6 +118,12 @@ public class SpaceshipController : MonoBehaviour
     private void FixedUpdate()
     {
         if (!rb) { return; };
+
+        if(rb.velocity.magnitude > 10 && fuel < 100.0f)
+        {
+            spawner.SpawnAsteroid();
+        }
+
         if (!updateShip) { rb.velocity = Vector3.zero; rb.totalTorque = 0; rb.freezeRotation = true; return; }
         if (fuel <= 0.0f) { return; }
 
