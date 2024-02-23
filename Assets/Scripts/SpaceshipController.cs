@@ -25,10 +25,11 @@ public class SpaceshipController : MonoBehaviour
     private float t = 0.0f;
 
     private float lastShot = 0.0f;
-    private float lastShotCooldown = 0.2f;
+    private float shotCooldown = 0.2f;
 
     private float lastAsteroid = 0.0f;
-    private float lastAsteroid
+    private float asteroidCooldown = 10.0f;
+    private int asteroidChance = 10; 
 
     private void Awake()
     {
@@ -99,7 +100,7 @@ public class SpaceshipController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift)) { throttle *= 2; }
 
-        if (Input.GetMouseButton(0) && t - lastShot > lastShotCooldown) {
+        if (Input.GetMouseButton(0) && t - lastShot > shotCooldown) {
             lastShot = t;
             GameObject projectile = Instantiate(projectilePrefab, transform.position, transform.rotation, transform);
             Projectile script = projectile.GetComponent<Projectile>();
@@ -119,9 +120,10 @@ public class SpaceshipController : MonoBehaviour
     {
         if (!rb) { return; };
 
-        if(rb.velocity.magnitude > 10 && fuel < 100.0f)
+        if(rb.velocity.magnitude > 10 && fuel < 100.0f && t - lastAsteroid > asteroidCooldown && Random.Range(1, asteroidChance) <= 1)
         {
             spawner.SpawnAsteroid();
+            lastAsteroid = t;
         }
 
         if (!updateShip) { rb.velocity = Vector3.zero; rb.totalTorque = 0; rb.freezeRotation = true; return; }

@@ -55,7 +55,6 @@ public class Interface : MonoBehaviour
         wreck = GameObject.FindGameObjectWithTag("Wreck");
 
         fuelTransform.sizeDelta = new Vector2((playerController.GetFuel() - 100.0f) * 2, 20);
-        Debug.Log(playerController.GetFuel());
 
         survivorText.SetText(playerController.GetSurvivors().ToString());
         moneyText.SetText(playerController.GetMoney().ToString());
