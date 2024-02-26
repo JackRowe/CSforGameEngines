@@ -33,7 +33,7 @@ public class SpaceshipController : MonoBehaviour
 
     private float lastEnemy = 0.0f;
     private float enemyCooldown = 10.0f;
-    private int enemyChance = 1;
+    private int enemyChance = 10;
 
     private void Awake()
     {
@@ -96,6 +96,7 @@ public class SpaceshipController : MonoBehaviour
     public float GetFuel() => fuel;
 
     public void RefillFuel() { fuel = 100.0f; }
+    public void AddMoney(int addedMoney) { money += addedMoney; }
 
     private void Update()
     {

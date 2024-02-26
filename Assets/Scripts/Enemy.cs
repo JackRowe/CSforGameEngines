@@ -45,5 +45,7 @@ public class Enemy : MonoBehaviour
     {
         animator.SetTrigger("Death");
         updateShip = false;
+        Destroy(gameObject, 1.0f);
+
     }
 }

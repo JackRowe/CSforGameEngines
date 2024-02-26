@@ -38,6 +38,13 @@ public class Projectile : MonoBehaviour
             case ("Enemy"):
                 Enemy enemy = collision.gameObject.GetComponent<Enemy>();
                 enemy.Death();
+
+                if (Creator.CompareTag("Player"))
+                {
+                    SpaceshipController controller = Creator.GetComponent<SpaceshipController>();
+                    controller.AddMoney(5);
+                }
+
                 return;
             default:
                 Destroy(gameObject);
