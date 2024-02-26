@@ -29,11 +29,11 @@ public class SpaceshipController : MonoBehaviour
 
     private float lastAsteroid = 0.0f;
     private float asteroidCooldown = 10.0f;
-    private int asteroidChance = 10;
+    private int asteroidChance = 1;
 
     private float lastEnemy = 0.0f;
     private float enemyCooldown = 10.0f;
-    private int enemyChance = 10;
+    private int enemyChance = 1;
 
     private void Awake()
     {
