@@ -35,6 +35,10 @@ public class Projectile : MonoBehaviour
                 }
 
                 return;
+            case ("Enemy"):
+                Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+                enemy.Death();
+                return;
             default:
                 Destroy(gameObject);
                 return;

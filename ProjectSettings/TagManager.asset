@@ -8,6 +8,7 @@ TagManager:
   - Wreck
   - Station
   - Asteroid
+  - Enemy
   layers:
   - Default
   - TransparentFX

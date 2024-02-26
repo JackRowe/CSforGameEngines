@@ -24,10 +24,10 @@ public class Spawner : MonoBehaviour
     }
     public void SpawnAsteroid()
     {
-        Instantiate(asteroidPrefab, player.transform.position + (new Vector3(rbPlayer.velocity.x, rbPlayer.velocity.y) * 10), Quaternion.identity);
+        Instantiate(asteroidPrefab, player.transform.position + (new Vector3(rbPlayer.velocity.x + Random.Range(-10, 10), rbPlayer.velocity.y) * 10), Quaternion.identity);
     }
     public void SpawnEnemy()
     {
-        Instantiate(enemyPrefab, player.transform.position + (new Vector3(rbPlayer.velocity.x, rbPlayer.velocity.y) * 10), Quaternion.identity);
+        Instantiate(enemyPrefab, player.transform.position + (new Vector3(rbPlayer.velocity.x + Random.Range(-10, 10), rbPlayer.velocity.y) * 10), Quaternion.identity);
     }
 }
