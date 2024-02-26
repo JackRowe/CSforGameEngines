@@ -31,9 +31,13 @@ public class Enemy : MonoBehaviour
         Quaternion targetRotation = Quaternion.LookRotation(targetDistance, -Vector3.forward);
         transform.rotation = Quaternion.Slerp(transform.rotation, new Quaternion(0, 0, -targetRotation.y, targetRotation.w), rotSpeed / 100);
 
-        if (Mathf.Abs((new Vector3(rb.velocity.x, rb.velocity.y) + targetDistance.normalized).magnitude) <= 10)
+        if(targetDistance.magnitude > 10)
         {
-            rb.AddForce(targetDistance.normalized * speed);
+            rb.velocity = rbTarget.velocity + new Vector2(targetDistance.x, targetDistance.y);
+        }
+        else
+        {
+            rb.velocity = rbTarget.velocity;
         }
     }
 
