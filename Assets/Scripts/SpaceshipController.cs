@@ -29,7 +29,11 @@ public class SpaceshipController : MonoBehaviour
 
     private float lastAsteroid = 0.0f;
     private float asteroidCooldown = 10.0f;
-    private int asteroidChance = 10; 
+    private int asteroidChance = 10;
+
+    private float lastEnemy = 0.0f;
+    private float enemyCooldown = 10.0f;
+    private int enemyChance = 1;
 
     private void Awake()
     {
@@ -120,10 +124,19 @@ public class SpaceshipController : MonoBehaviour
     {
         if (!rb) { return; };
 
-        if(rb.velocity.magnitude > 10 && fuel < 100.0f && t - lastAsteroid > asteroidCooldown && Random.Range(1, asteroidChance) <= 1)
+        if(rb.velocity.magnitude > 10 && fuel < 100.0f)
         {
-            spawner.SpawnAsteroid();
-            lastAsteroid = t;
+            if (t - lastAsteroid > asteroidCooldown && Random.Range(1, asteroidChance) <= 1)
+            {
+                spawner.SpawnAsteroid();
+                lastAsteroid = t;
+            }
+
+            if (t - lastEnemy > enemyCooldown && Random.Range(1, enemyChance) <= 1)
+            {
+                spawner.SpawnEnemy();
+                lastEnemy = t;
+            }
         }
 
         if (!updateShip) { rb.velocity = Vector3.zero; rb.totalTorque = 0; rb.freezeRotation = true; return; }

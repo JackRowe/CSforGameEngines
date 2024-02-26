@@ -6,6 +6,7 @@ public class Spawner : MonoBehaviour
 {
     [SerializeField] GameObject wreckPrefab;
     [SerializeField] GameObject asteroidPrefab;
+    [SerializeField] GameObject enemyPrefab;
     private GameObject player;
     private Rigidbody2D rbPlayer;
 
@@ -24,5 +25,9 @@ public class Spawner : MonoBehaviour
     public void SpawnAsteroid()
     {
         Instantiate(asteroidPrefab, player.transform.position + (new Vector3(rbPlayer.velocity.x, rbPlayer.velocity.y) * 10), Quaternion.identity);
+    }
+    public void SpawnEnemy()
+    {
+        Instantiate(enemyPrefab, player.transform.position + (new Vector3(rbPlayer.velocity.x, rbPlayer.velocity.y) * 10), Quaternion.identity);
     }
 }

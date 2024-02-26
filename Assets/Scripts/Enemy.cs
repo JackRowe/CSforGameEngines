@@ -22,7 +22,12 @@ public class Enemy : MonoBehaviour
         if (!rb) return;
 
         Vector3 targetDistance = target.transform.position - transform.position;
-        Quaternion targetRotation = Quaternion.LookRotation(targetDistance + (new Vector3(rbTarget.velocity.x, rbTarget.velocity.y) * (targetDistance.magnitude / 2)), -Vector3.forward);
+        Quaternion targetRotation = Quaternion.LookRotation(targetDistance, -Vector3.forward);
         transform.rotation = Quaternion.Slerp(transform.rotation, new Quaternion(0, 0, -targetRotation.y, targetRotation.w), rotSpeed / 100);
+
+        if (Mathf.Abs((new Vector3(rb.velocity.x, rb.velocity.y) + targetDistance.normalized).magnitude) <= 10)
+        {
+            rb.AddForce(targetDistance.normalized * speed);
+        }
     }
 }
