@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SpaceshipController : MonoBehaviour
 {
@@ -89,6 +90,7 @@ public class SpaceshipController : MonoBehaviour
     {
         animator.SetTrigger("Died");
         updateShip = false;
+        SceneManager.LoadScene("GameScene");
     }
 
     public int GetSurvivors() => survivors;
