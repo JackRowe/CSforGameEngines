@@ -29,11 +29,11 @@ public class SpaceshipController : MonoBehaviour
 
     private float lastAsteroid = 0.0f;
     private float asteroidCooldown = 10.0f;
-    private int asteroidChance = 1;
+    private int asteroidChance = 100;
 
     private float lastEnemy = 0.0f;
     private float enemyCooldown = 10.0f;
-    private int enemyChance = 1;
+    private int enemyChance = 500;
 
     private void Awake()
     {
@@ -85,7 +85,7 @@ public class SpaceshipController : MonoBehaviour
         }
     }
 
-    private void Death()
+    public void Death()
     {
         animator.SetTrigger("Died");
         updateShip = false;

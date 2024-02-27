@@ -46,6 +46,12 @@ public class Projectile : MonoBehaviour
                 }
 
                 return;
+            case ("Projectile"):
+                return;
+            case ("Player"):
+                SpaceshipController player = collision.gameObject.GetComponent<SpaceshipController>();
+                player.Death();
+                return;
             default:
                 Destroy(gameObject);
                 return;
