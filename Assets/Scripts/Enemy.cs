@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -33,11 +34,11 @@ public class Enemy : MonoBehaviour
 
         if(targetDistance.magnitude > 10)
         {
-            rb.velocity = rbTarget.velocity + new Vector2(targetDistance.x, targetDistance.y);
+            rb.velocity = Vector3.Slerp(rb.velocity, rbTarget.velocity + new Vector2(targetDistance.x, targetDistance.y), speed / 100);
         }
         else
         {
-            rb.velocity = rbTarget.velocity;
+            rb.velocity = Vector3.Slerp(rb.velocity, rbTarget.velocity - new Vector2(targetDistance.x, targetDistance.y), speed / 100);
         }
     }
 

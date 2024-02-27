@@ -28,6 +28,6 @@ public class Spawner : MonoBehaviour
     }
     public void SpawnEnemy()
     {
-        Instantiate(enemyPrefab, player.transform.position + (new Vector3(rbPlayer.velocity.x + Random.Range(-10, 10), rbPlayer.velocity.y) * 10), Quaternion.identity);
+        Instantiate(enemyPrefab, player.transform.position + (new Vector3(rbPlayer.velocity.x + Random.Range(-100, 100), rbPlayer.velocity.y) * 10), Quaternion.identity);
     }
 }
