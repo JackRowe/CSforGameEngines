@@ -12,6 +12,7 @@ public class Camera : MonoBehaviour
     }
     private void Update()
     {
+        // Make the camera follow the player
         transform.position = new Vector3(target.transform.position.x, target.transform.position.y, -10);
     }
 }

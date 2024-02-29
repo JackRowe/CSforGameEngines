@@ -38,6 +38,7 @@ public class SpaceshipController : MonoBehaviour
 
     private void Awake()
     {
+        // Get components of the player alongside the ui script and the engine particle emitter
         spawner = GetComponent<Spawner>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -49,17 +50,21 @@ public class SpaceshipController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // Check both the other collider and the player's collider exist
         if (compositeCollider == null || collision == null) { return; }
 
         switch (collision.gameObject.tag)
         {
+            // If the player hits a planet or an asteroid, call the death method
             case ("Planet") or ("Asteroid"):
                 Death();
                 return;
+            // If it's a wreck, destroy the wreck and add a random amount of survivors
             case ("Wreck"):
                 survivors += Random.Range(10,20);
                 Destroy(collision.gameObject);
                 return;
+            // If it's the station, convert the survivors to money, call the refill fuel method and open the shop.
             case ("Station"):
                 money += survivors;
                 survivors = 0;
@@ -73,10 +78,12 @@ public class SpaceshipController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        // Check both the other collider and the player's collider exist
         if (compositeCollider == null || collision == null) { return; }
 
         switch (collision.gameObject.tag)
         {
+            // Refill fuel and close the shop when the player stops colloding
             case ("Station"):
                 ui.CloseShop();
                 RefillFuel();
@@ -86,8 +93,12 @@ public class SpaceshipController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Kills the player
+    /// </summary>
     public void Death()
     {
+        // Play the death animation, stops updating the ship and just loads the scene again
         animator.SetTrigger("Died");
         updateShip = false;
         SceneManager.LoadScene("GameScene");
@@ -102,11 +113,15 @@ public class SpaceshipController : MonoBehaviour
 
     private void Update()
     {
+        // Get the player's input with W providing a throttle output between 0 and 1, and inverting the horizontal axis for the ships rotation
         throttle = Mathf.Clamp(Input.GetAxis("Vertical"), 0, 1);
         rotation = -Input.GetAxis("Horizontal");
 
+        // Boost the ship's speed
         if (Input.GetKey(KeyCode.LeftShift)) { throttle *= 2; }
 
+        // If the player has their left mouse button down and the time between the last shot is greater than shotCooldown
+        // create a projectile with the player's current location and rotation and set it's velocity to the player's current velocity
         if (Input.GetMouseButton(0) && t - lastShot > shotCooldown) {
             lastShot = t;
             GameObject projectile = Instantiate(projectilePrefab, transform.position, transform.rotation, transform);
@@ -118,6 +133,9 @@ public class SpaceshipController : MonoBehaviour
 
         t += Time.deltaTime;
 
+        // If theres no engine emitter, return
+        // otherwise if the player has the throttle on, play the particles
+        // finally if they dont, stop playing the particles
         if (!engineEmitter) { return; }
         if (throttle > 0.0f && !engineEmitter.isEmitting && updateShip && fuel > 0.0f) { engineEmitter.Play(); }
         else { engineEmitter.Stop(); }
@@ -127,14 +145,17 @@ public class SpaceshipController : MonoBehaviour
     {
         if (!rb) { return; };
 
-        if(rb.velocity.magnitude > 10 && fuel < 100.0f)
+        if(rb.velocity.magnitude > 10)
         {
+            // If the time between last spawned asteroid past asteroidCooldown and the random number generated is less than 1
+            // spawn an asteroid
             if (t - lastAsteroid > asteroidCooldown && Random.Range(1, asteroidChance) <= 1)
             {
                 spawner.SpawnAsteroid();
                 lastAsteroid = t;
             }
 
+            // Same thing for the enemy 
             if (t - lastEnemy > enemyCooldown && Random.Range(1, enemyChance) <= 1)
             {
                 spawner.SpawnEnemy();
@@ -142,13 +163,17 @@ public class SpaceshipController : MonoBehaviour
             }
         }
 
+        // If the update ship variable is false, stop moving the ship
+        // if there's no fuel, just return
         if (!updateShip) { rb.velocity = Vector3.zero; rb.totalTorque = 0; rb.freezeRotation = true; return; }
         if (fuel <= 0.0f) { return; }
 
+        // Add the player's input to the ship and decrease the amount of fuel
         rb.AddRelativeForce(new Vector2(0, throttle * speed));
         rb.AddTorque(rotation * rotSpeed);
         fuel -= throttle / 30;
 
+        // Finally, spawn a wreck if there isn't already one spawned and the player has 0 survivors on board
         if (survivors <= 0 && !spawner.SpawnedWreck)
         {
             spawner.SpawnWreck();
